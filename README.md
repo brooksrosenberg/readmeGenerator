@@ -4,6 +4,8 @@
   
  ##  Description
  This is my rendition of a README generator made using Node.js and Inquirer.js
+
+ screencastify link: https://watch.screencastify.com/v/puvU8mAjJ9uZclSqalP6
  
  ## Table of Contents 
  
