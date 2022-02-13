@@ -1,52 +1,54 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown');
 
-const generateHTML = ({ projectTitle, description, installation, usage, license, features, contributing, tests, email, username}) =>
+// const generateHTML = ({ projectTitle, description, installation, usage, license, contributing, tests, email, username}) =>
 
- `# ${projectTitle}
+//  `# ${projectTitle}
 
-##  Description:
-${description}
+// ${license}
 
-## Table of Contents 
+// ##  Description
+// ${description}
 
-- [Installation](#Installation)
-- [Usage](#Usage)
-- [License](#License)
-- [Contributing](#Contributing)
-- [Tests](#Tests)
-- [Questions](#Questions)
+// ## Table of Contents 
 
-
-## Installation 
-to install necessary dependencies, run the following command:
-
-${installation}
+// - [Installation](#Installation)
+// - [Usage](#Usage)
+// - [License](#License)
+// - [Contributing](#Contributing)
+// - [Tests](#Tests)
+// - [Questions](#Questions)
 
 
-## Usage 
-${usage}
+// ## Installation 
+// to install necessary dependencies, run the following command:
+
+// ${installation}
 
 
-## License
-This project is licensed under the ${license} license.
-
-## Contributing
-${contributing}
+// ## Usage 
+// ${usage}
 
 
-## Tests
-To run tests, run the following command;
-${tests}
+// ## License
+// This project is licensed under the ${license} license.
 
-## Questions
-If you have any questions about the repo, open an issue or contact me directly at ${email}. You can find more of my work at ${username} `
+// ## Contributing
+// ${contributing}
 
+
+// ## Tests
+// To run tests, run the following command:
+
+// ${tests}
+
+// ## Questions
+// If you have any questions about the repo, open an issue or contact me directly at ${email}. You can find more of my work at: https://github.com/${username} `
 
 // TODO: create an array of questions for user input
-inquirer
-  .prompt([
+const questions =[
     {
         type: 'input',
         name: 'username',
@@ -71,7 +73,7 @@ inquirer
         type: 'list',
         name: 'license',
         message: 'Choose your license: ',
-        choices: ['MIT', 'Red', 'Green']
+        choices: ['MIT', 'Apache 2.0', 'GNU GPL v3']
     },
     {
         type: 'input',
@@ -97,21 +99,41 @@ inquirer
         message: 'What does the user need to know about contributing to the repo? '
     },
 
+    
+    // {
+    //     type: 'input',
+    //     name: 'year',
+    //     message: 'Copyright [yyyy] [name of copyright owner]What does the user need to know about contributing to the repo? '
+    // },
+    // {
+    //     type: 'input',
+    //     name: 'year',
+    //     message: 'Copyright [yyyy] [name of copyright owner]What does the user need to know about contributing to the repo? '
+    // },
 
-])
-.then((answers) => {
-    const htmlPageContent = generateHTML(answers);
 
-    fs.writeFile('README.md', htmlPageContent, (err) =>
-      err ? console.log(err) : console.log('Successfully created README!')
-    );
-  });
+]
 
-// // TODO: Create a function to write README file
-// function writeToFile(fileName, data) { }
+function writeFile(fileName, data) {
+    fs.writeFile(fileName, data, (err) =>
+    err ? console.log(err) : console.log('You have successfully created a README file!'))
+}
+// .then((answers) => {
+//     const htmlPageContent = generateHTML(answers);
 
-// // TODO: Create a function to initialize app
-// function init() { }
+//     fs.writeFile('README.md', htmlPageContent, (err) =>
+//       err ? console.log(err) : console.log('Successfully created README!')
+//     );
+//   });
 
-// // Function call to initialize app
-// init();
+// TODO: Create a function to initialize app
+function init() {
+    inquirer.prompt(questions)
+    .then((data) => {
+            console.log(data)
+        writeFile('README.md', generateMarkdown(data))
+    })
+}
+
+// // // Function call to initialize app
+init();
